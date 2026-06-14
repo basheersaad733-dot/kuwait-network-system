@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuwait Network | لوحة تحكم المدير</title>
+    <title>Kuwait Network | لوحة تحكم الإدارة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,11 +16,11 @@
     <div id="loginOverlay" class="fixed inset-0 bg-slate-900 bg-opacity-95 flex flex-col justify-center items-center z-50 p-4">
         <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto shadow-inner">
-                <i class="fa-solid fa-user-shield"></i>
+                <i class="fa-solid fa-network-wired"></i>
             </div>
             <div>
-                <h2 class="text-2xl font-bold text-slate-800">لوحة تحكم المدير</h2>
-                <p class="text-xs text-slate-400 mt-1">نظام إدارة البلاغات ومهام الفنيين لشبكة الكويت</p>
+                <h2 class="text-2xl font-bold text-slate-800">Kuwait Network</h2>
+                <p class="text-xs text-slate-400 mt-1">نظام إدارة البلاغات ومهام الفنيين المطور</p>
             </div>
             <div class="space-y-2">
                 <input type="password" id="passInput" onkeypress="handleKeyPress(event)" placeholder="أدخل رمز المرور السري" class="w-full border border-slate-200 p-3 rounded-xl text-center outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition font-bold tracking-widest text-slate-800">
@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <h1 class="text-lg font-bold tracking-wide">Kuwait Network</h1>
-                        <p class="text-[10px] text-slate-400">نظام إدارة البلاغات والمهام</p>
+                        <p class="text-[10px] text-slate-400">لوحة تحكم الإدارة العامة</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
@@ -115,7 +115,7 @@
                 </div>
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
                     <div class="p-4 bg-slate-50 border-b font-bold text-slate-700 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-blue-500"></i> قائمة البلاغات وطلبات الصيانة السحابية
+                        <i class="fa-solid fa-list-check text-blue-500"></i> قائمة البلاغات وطلبات الصيانة السحابية لشبكة الكويت
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right border-collapse text-sm">
@@ -174,9 +174,9 @@
                 <button onclick="switchTab('home')" class="text-sm text-blue-600 font-bold flex items-center gap-1"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
                     <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-gears text-rose-500"></i> إعدادات لوحة التحكم السحابية</h3>
-                    <p class="text-xs text-slate-500">نسخة النظام المستقرة: <span class="font-bold text-slate-700">v3.6 الاحترافية</span></p>
+                    <p class="text-xs text-slate-500">نسخة النظام المستقرة: <span class="font-bold text-slate-700">Kuwait Network v3.6</span></p>
                     <div class="border-t pt-4">
-                        <p class="text-xs text-amber-600 font-semibold"><i class="fa-solid fa-circle-exclamation"></i> قاعدة البيانات متصلة بشكل مباشر ومفتوحة الصلاحيات لحفظ ومعالجة البلاغات الفورية.</p>
+                        <p class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> لوحة التحكم مرتبطة بقاعدة بيانات Firebase الرسمية والمؤمنة للشبكة.</p>
                     </div>
                 </div>
             </div>
@@ -189,7 +189,6 @@
     const SECRET_PASSWORD = "1234"; 
     let globalTechs = ["غير معين بعد", "المهندس فؤاد", "محبوب"]; 
 
-    // التقاط ضغط زر Enter/ذهاب من لوحة مفاتيح الهاتف مجاناً
     function handleKeyPress(e) {
         if (e.key === 'Enter') {
             checkPassword();
