@@ -3,360 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuwait Network | لوحة تحكم الإدارة</title>
+    <title>Kuwait Network | لوحة الإدارة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Cairo', sans-serif; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Cairo', sans-serif; }</style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800">
+<body class="bg-gray-50 p-4">
 
-    <div id="loginOverlay" class="fixed inset-0 bg-slate-900 bg-opacity-95 flex flex-col justify-center items-center z-50 p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center space-y-6 border border-slate-100">
-            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto shadow-inner">
-                <i class="fa-solid fa-network-wired"></i>
-            </div>
-            <div>
-                <h2 class="text-2xl font-bold text-slate-800">Kuwait Network</h2>
-                <p class="text-xs text-slate-400 mt-1">نظام إدارة البلاغات ومهام الفنيين المطور</p>
-            </div>
-            <div class="space-y-2">
-                <input type="password" id="passInput" onkeypress="handleKeyPress(event)" placeholder="أدخل رمز المرور السري" class="w-full border border-slate-200 p-3 rounded-xl text-center outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition font-bold tracking-widest text-slate-800">
-                <p id="loginError" class="text-red-500 text-xs hidden font-semibold">❌ رمز المرور غير صحيح!</p>
-            </div>
-            <button onclick="checkPassword()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all">تسجيل الدخول</button>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login" class="max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-lg mt-20 text-center border border-gray-100">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Kuwait Network</h2>
+        <input type="password" id="pass" placeholder="أدخل الرمز السري" class="w-full border p-3 rounded-xl mb-4 text-center outline-none focus:border-blue-500">
+        <button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded-xl font-bold hover:bg-blue-800 transition">تسجيل الدخول</button>
+    </div>
+
+    <!-- لوحة البيانات -->
+    <div id="dashboard" class="hidden max-w-5xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">لوحة تحكم Kuwait Network</h1>
+            <button onclick="location.reload()" class="bg-gray-200 px-4 py-2 rounded-lg text-sm font-bold">تحديث</button>
+        </div>
+        
+        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
+            <table class="w-full text-sm text-right">
+                <thead class="bg-gray-900 text-white">
+                    <tr>
+                        <th class="p-4">رقم الطلب</th>
+                        <th class="p-4">اسم المشترك</th>
+                        <th class="p-4">رقم التواصل</th>
+                        <th class="p-4">الحالة</th>
+                        <th class="p-4 text-center">إجراء</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="divide-y divide-gray-100">
+                    <tr><td colspan="5" class="p-8 text-center text-gray-500">جاري تحميل البلاغات...</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div id="dashboardContent" class="hidden flex flex-col min-h-screen">
-        
-        <header class="bg-slate-900 text-white p-4 shadow-md sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="bg-blue-600 p-2 rounded-xl text-white shadow-md">
-                        <i class="fa-solid fa-network-wired text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-bold tracking-wide">Kuwait Network</h1>
-                        <p class="text-[10px] text-slate-400">لوحة تحكم الإدارة العامة</p>
-                    </div>
-                </div>
-                <button onclick="logout()" class="bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
-                </button>
-            </div>
-        </header>
-
-        <main class="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full space-y-6">
-            
-            <div id="tab-home" class="tab-pane space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-400 text-xs font-semibold">إجمالي البلاغات والطلبات</p>
-                            <p id="countTotal" class="text-3xl font-bold text-slate-800 mt-1">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-clipboard-list"></i></div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-400 text-xs font-semibold">طلبات قيد المعالجة</p>
-                            <p id="countPending" class="text-3xl font-bold text-amber-500 mt-1">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-400 text-xs font-semibold">أعطال تم حلها</p>
-                            <p id="countResolved" class="text-3xl font-bold text-emerald-500 mt-1">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-circle-check"></i></div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onclick="switchTab('tickets')" class="bg-white hover:bg-slate-100 p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-3 transition group">
-                        <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition"><i class="fa-solid fa-headset"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm text-slate-800">طلبات الخدمة</h3>
-                            <p class="text-[10px] text-slate-400 mt-0.5">متابعة صيانة وتركيبات</p>
-                        </div>
-                    </button>
-                    <button onclick="switchTab('techs')" class="bg-white hover:bg-slate-100 p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-3 transition group">
-                        <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition"><i class="fa-solid fa-user-gear"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm text-slate-800">إدارة الفنيين</h3>
-                            <p class="text-[10px] text-slate-400 mt-0.5">إضافة ومتابعة المهندسين</p>
-                        </div>
-                    </button>
-                    <button onclick="switchTab('reports')" class="bg-white hover:bg-slate-100 p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-3 transition group">
-                        <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition"><i class="fa-solid fa-chart-pie"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm text-slate-800">التقارير الإحصائية</h3>
-                            <p class="text-[10px] text-slate-400 mt-0.5">أداء الشبكة اليومي</p>
-                        </div>
-                    </button>
-                    <button onclick="switchTab('settings')" class="bg-white hover:bg-slate-100 p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-3 transition group">
-                        <div class="w-14 h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition"><i class="fa-solid fa-sliders"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm text-slate-800">إعدادات النظام</h3>
-                            <p class="text-[10px] text-slate-400 mt-0.5">تحديث إعدادات البلاغات</p>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div id="tab-tickets" class="tab-pane hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <button onclick="switchTab('home')" class="text-sm text-blue-600 font-bold flex items-center gap-1"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                    <span class="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-bold animate-pulse">تحديث تلقائي فوري مفعّل</span>
-                </div>
-                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-                    <div class="p-4 bg-slate-50 border-b font-bold text-slate-700 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-blue-500"></i> قائمة البلاغات وطلبات الصيانة السحابية لشبكة الكويت
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm">
-                            <thead>
-                                <tr class="bg-slate-800 text-white text-xs">
-                                    <th class="p-3">رقم الطلب</th>
-                                    <th class="p-3">اسم المشترك</th>
-                                    <th class="p-3">المنطقة</th>
-                                    <th class="p-3">نوع الطلب</th>
-                                    <th class="p-3">الحالة</th>
-                                    <th class="p-3">الفني المسؤول</th>
-                                    <th class="p-3 text-center">إجراء السيرفر</th>
-                                </tr>
-                            </thead>
-                            <tbody id="ticketsTableBody" class="divide-y divide-slate-100">
-                                <tr><td colspan="7" class="text-center p-6 text-slate-400">جاري جلب البيانات...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-techs" class="tab-pane hidden space-y-6">
-                <button onclick="switchTab('home')" class="text-sm text-blue-600 font-bold flex items-center gap-1"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
-                        <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-user-plus text-purple-500"></i> إضافة فني / مهندس جديد للشبكة</h3>
-                        <p class="text-xs text-slate-400">الاسم المضاف هنا سيظهر فوراً وتلقائياً كخيار داخل قائمة الفنيين في البلاغات دون تعديل الكود.</p>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-600">اسم الفني كاملاً:</label>
-                            <input type="text" id="newTechName" placeholder="مثال: المهندس أحمد رائد" class="w-full border p-2.5 rounded-xl outline-none focus:border-purple-500 bg-slate-50 text-sm">
-                        </div>
-                        <button onclick="addNewTechnician()" class="w-full bg-purple-600 text-white p-2.5 rounded-xl font-bold hover:bg-purple-700 transition shadow-sm">حفظ الفني الجديد بالسيرفر</button>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
-                        <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-users-gear text-indigo-500"></i> طاقم المهندسين الحالي بالسيرفر</h3>
-                        <ul id="techsList" class="divide-y divide-slate-100 text-sm text-slate-600">
-                            <li class="p-2 text-center text-slate-400">جاري تحميل الطاقم...</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-reports" class="tab-pane hidden space-y-4">
-                <button onclick="switchTab('home')" class="text-sm text-blue-600 font-bold flex items-center gap-1"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border text-center p-12 space-y-3">
-                    <div class="text-4xl text-sky-500"><i class="fa-solid fa-chart-line"></i></div>
-                    <h3 class="font-bold text-slate-800">التقارير الذكية والأداء</h3>
-                    <p class="text-xs text-slate-400 max-w-sm mx-auto">هذا القسم يقوم بقراءة أداء إغلاق الأعطال الميدانية وحساب متوسط سرعة المهندسين في الاستجابة لطلبات صيانة Kuwait Network.</p>
-                </div>
-            </div>
-
-            <div id="tab-settings" class="tab-pane hidden space-y-4">
-                <button onclick="switchTab('home')" class="text-sm text-blue-600 font-bold flex items-center gap-1"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
-                    <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-gears text-rose-500"></i> إعدادات لوحة التحكم السحابية</h3>
-                    <p class="text-xs text-slate-500">نسخة النظام المستقرة: <span class="font-bold text-slate-700">Kuwait Network v3.6</span></p>
-                    <div class="border-t pt-4">
-                        <p class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> لوحة التحكم مرتبطة بقاعدة بيانات Firebase الرسمية والمؤمنة للشبكة.</p>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
     <script>
-    const FIREBASE_URL = "https://kuwait-network-system-default-rtdb.firebaseio.com/";
-    const SECRET_PASSWORD = "1234"; 
-    let globalTechs = ["غير معين بعد", "المهندس فؤاد", "محبوب"]; 
+        // ضع رابط قاعدة بياناتك هنا مكان الرابط الموضح
+        const DB_URL = "https://kuwait-network-system-default-rtdb.firebaseio.com/";
 
-    function handleKeyPress(e) {
-        if (e.key === 'Enter') {
-            checkPassword();
-        }
-    }
-
-    function checkPassword() {
-        const input = document.getElementById('passInput').value.trim();
-        if (input === SECRET_PASSWORD) {
-            document.getElementById('loginOverlay').classList.add('hidden');
-            document.getElementById('dashboardContent').classList.remove('hidden');
-            initSystem();
-        } else {
-            document.getElementById('loginError').classList.remove('hidden');
-        }
-    }
-
-    function logout() {
-        document.getElementById('passInput').value = '';
-        document.getElementById('loginOverlay').classList.remove('hidden');
-        document.getElementById('dashboardContent').classList.add('hidden');
-    }
-
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
-        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-    }
-
-    function initSystem() {
-        fetchTechs();
-        listenToTickets();
-        setInterval(() => {
-            fetchTechs();
-            listenToTickets();
-        }, 4000); 
-    }
-
-    async function fetchTechs() {
-        try {
-            const response = await fetch(`${FIREBASE_URL}technicians.json`);
-            const data = await response.json();
-            globalTechs = ["غير معين بعد", "المهندس فؤاد", "محبوب"];
-            
-            if (data) {
-                Object.keys(data).forEach(k => {
-                    if(data[k] && data[k].name) globalTechs.push(data[k].name);
-                });
+        function login() {
+            if(document.getElementById('pass').value === "1234") {
+                document.getElementById('login').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                fetchData();
+            } else {
+                alert("رمز المرور غير صحيح!");
             }
+        }
 
-            const listEl = document.getElementById('techsList');
-            listEl.innerHTML = '';
-            globalTechs.forEach(t => {
-                const li = document.createElement('li');
-                li.className = 'p-2.5 flex justify-between items-center font-semibold text-slate-700 text-xs';
-                li.innerHTML = `<span><i class="fa-solid fa-user text-slate-400 ml-1.5"></i> ${t}</span> 
-                                ${t !== "غير معين بعد" && t !== "المهندس فؤاد" && t !== "محبوب" ? `<button onclick="deleteTech('${t}')" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[10px] text-slate-400 font-normal">أساسي</span>'}`;
-                listEl.appendChild(li);
-            });
-        } catch (e) { console.error(e); }
-    }
+        async function fetchData() {
+            try {
+                const res = await fetch(`${DB_URL}tickets.json`);
+                const data = await res.json();
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = "";
+                
+                if (!data) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center">لا توجد بلاغات حالياً</td></tr>';
+                    return;
+                }
 
-    async function addNewTechnician() {
-        const nameInput = document.getElementById('newTechName');
-        const name = nameInput.value.trim();
-        if(!name) return alert("الرجاء كتابة اسم الفني أولاً!");
-
-        try {
-            await fetch(`${FIREBASE_URL}technicians.json`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name })
-            });
-            nameInput.value = '';
-            alert(`🎉 تم حفظ وتثبيت ${name} في السيرفر!`);
-            fetchTechs();
-        } catch(e) { alert("خطأ بالاتصال"); }
-    }
-
-    async function listenToTickets() {
-        try {
-            const response = await fetch(`${FIREBASE_URL}tickets.json`);
-            const data = await response.json();
-            const tbody = document.getElementById('ticketsTableBody');
-            tbody.innerHTML = '';
-
-            if (!data) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center p-6 text-slate-400">لا توجد أي بلاغات حالياً بالسيرفر.</td></tr>`;
-                updateCounters(0, 0, 0);
-                return;
+                for(let id in data) {
+                    let item = data[id];
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 font-bold">${item.ticketId || 'KN-000'}</td>
+                            <td class="p-4">${item.clientName || 'مشترك'}</td>
+                            <td class="p-4 text-blue-600 font-bold">${item.phone || 'لا يوجد'}</td>
+                            <td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">${item.status || 'جديد'}</span></td>
+                            <td class="p-4 text-center"><button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs">عرض</button></td>
+                        </tr>
+                    `;
+                }
+            } catch(e) {
+                alert("خطأ في الاتصال بالسيرفر، تأكد من رابط قاعدة البيانات.");
             }
-
-            let cNew = 0, cPending = 0, cResolved = 0, cTotal = 0;
-            const keys = Array.isArray(data) ? data.map((_, i) => i) : Object.keys(data);
-
-            keys.forEach(key => {
-                const ticket = data[key];
-                if (!ticket) return;
-
-                cTotal++;
-                const status = ticket.status || 'new';
-                if (status === 'new') cNew++;
-                if (status === 'assigned') cPending++;
-                if (status === 'resolved') cResolved++;
-
-                let badge = "";
-                if (status === 'new') badge = "<span class='bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full text-[11px] font-bold border border-blue-100'>جديد</span>";
-                if (status === 'assigned') badge = "<span class='bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full text-[11px] font-bold border border-amber-100'>قيد الصيانة</span>";
-                if (status === 'resolved') badge = "<span class='bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full text-[11px] font-bold border border-emerald-100'>مكتمل</span>";
-
-                let selectOptions = "";
-                globalTechs.forEach(t => {
-                    const isSelected = ticket.assignedTechnician === t ? 'selected' : '';
-                    selectOptions += `<option value="${t}" ${isSelected}>${t}</option>`;
-                });
-
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition text-slate-700 text-xs font-medium";
-                tr.innerHTML = `
-                    <td class="p-3 font-bold text-blue-600">${ticket.ticketId || `KN-${key}`}</td>
-                    <td class="p-3 font-bold text-slate-800">${ticket.clientName || ticket.name || 'مشترك'}</td>
-                    <td class="p-3 text-slate-500">${ticket.region || 'غير محدد'}</td>
-                    <td class="p-3 text-slate-500"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${ticket.type || 'عطل'}</span></td>
-                    <td class="p-3">${badge}</td>
-                    <td class="p-3">
-                        <select onchange="updateTechnician('${key}', this.value)" class="border border-slate-200 rounded-lg p-1.5 text-xs bg-white outline-none focus:border-blue-500 font-semibold text-slate-700 shadow-sm cursor-pointer">
-                            ${selectOptions}
-                        </select>
-                    </td>
-                    <td class="p-3 flex gap-1.5 justify-center">
-                        <button onclick="updateStatus('${key}', 'assigned')" class="bg-amber-500 text-white text-[11px] px-2.5 py-1.5 rounded-lg hover:bg-amber-600 font-bold shadow-sm transition">تفعيل</button>
-                        <button onclick="updateStatus('${key}', 'resolved')" class="bg-emerald-600 text-white text-[11px] px-2.5 py-1.5 rounded-lg hover:bg-emerald-700 font-bold shadow-sm transition">إغلاق</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            updateCounters(cTotal, cPending, cResolved);
-        } catch (e) { console.error(e); }
-    }
-
-    function updateCounters(total, pending, resolved) {
-        document.getElementById('countTotal').innerText = total;
-        document.getElementById('countPending').innerText = pending;
-        document.getElementById('countResolved').innerText = resolved;
-    }
-
-    async function updateTechnician(key, techName) {
-        try {
-            await fetch(`${FIREBASE_URL}tickets/${key}.json`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ assignedTechnician: techName })
-            });
-            listenToTickets();
-        } catch (e) { console.error(e); }
-    }
-
-    async function updateStatus(key, newStatus) {
-        try {
-            await fetch(`${FIREBASE_URL}tickets/${key}.json`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus })
-            });
-            alert("🎉 تم تحديث السيرفر بنجاح!");
-            listenToTickets();
-        } catch (e) { console.error(e); }
-    }
+        }
     </script>
 </body>
 </html>
