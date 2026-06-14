@@ -3,278 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة المشتركين | نظام إدارة الشبكة</title>
-    <!-- تضمين مكتبة Tailwind CSS للتصميم -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- تضمين خطوط جوجل لجمالية المظهر -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>بوابة الدعم الفني والطلبات | Kuwait Network</title>
+    <!-- تضمين مكتبة Tailwind CSS للتصميم المظهر في الصور -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
-    <!-- الهيدر / رأس الصفحة -->
-    <header class="bg-blue-600 text-white shadow-md p-4 text-center">
-        <h1 class="text-2xl font-bold">بوابة الدعم الفني والطلبات</h1>
-        <p class="text-sm opacity-90 mt-1">مرحباً بك في نظام الخدمة الذاتية للمشتركين</p>
+    <!-- الهيدر العلوي الظاهر في الصورة 295716.jpg -->
+    <header class="bg-blue-600 text-white text-center p-6 shadow-md">
+        <h1 class="text-2xl font-bold mb-1">بوابة الدعم الفني والطلبات</h1>
+        <p class="text-sm opacity-90">مرحباً بك في نظام الخدمة الذاتية للمشتركين</p>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-4xl mx-auto p-4 w-full flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <!-- القسم الأول: إرسال بلاغ أو طلب جديد -->
+        <!-- قسم تقديم طلب جديد الظاهر في الصورة 295716.jpg -->
         <section class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-            <h2 class="text-xl font-bold text-blue-600 mb-4 border-b pb-2 flex items-center gap-2">
+            <h2 class="text-xl font-bold text-blue-600 mb-6 border-b pb-2 flex items-center gap-2">
                 ✍️ تقديم طلب أو بلاغ جديد
             </h2>
             <form id="ticketForm" class="space-y-4">
                 <div>
                     <label class="block text-sm font-semibold mb-1">اسم المشترك المعتمد</label>
-                    <input type="text" id="clientName" required class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none" placeholder="الاسم الكامل">
+                    <input type="text" id="clientName" required placeholder="الاسم الكامل" class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold mb-1">رقم الهاتف للتواصل</label>
-                    <input type="tel" id="clientPhone" required class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none placeholder-right" placeholder="7xxxxxxxxx">
+                    <input type="tel" id="clientPhone" required placeholder="7xxxxxxxx" class="w-full p-2.5 border border-gray-300 rounded-md text-left focus:ring-2 focus:ring-blue-500 focus:outline-none" dir="ltr">
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold mb-1">المنطقة / الحي</label>
-                    <select id="region" required class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="">اختر المنطقة...</option>
+                    <select id="region" required class="w-full p-2.5 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="" disabled selected>اختر المنطقة...</option>
                         <option value="المنطقة الرئيسية">المنطقة الرئيسية</option>
-                        <option value="المنطقة الغربية">المنطقة الغربية</option>
-                        <option value="المنطقة الشرقية">المنطقة الشرقية</option>
-                        <option value="الريف / القرية">الريف / القرية</option>
+                        <option value="المربع الأول">المربع الأول</option>
+                        <option value="المربع الثاني">المربع الثاني</option>
+                        <option value="القرية الريفية">القرية الريفية</option>
                     </select>
                 </div>
+
                 <div>
-                    <label class="block text-sm font-semibold mb-1">نوع المعاملة</label>
-                    <div class="flex gap-4 mt-1">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="reqType" value="بلاغ مشكلة" checked class="form-radio text-blue-600">
-                            <span class="mr-2">بلاغ مشكلة أعطال</span>
+                    <label class="block text-sm font-semibold mb-2">نوع المعاملة</label>
+                    <div class="flex gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="reqType" value="بلاغ مشكلة أعطال" checked class="w-4 h-4 text-blue-600">
+                            <span>بلاغ مشكلة أعطال</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="reqType" value="طلب خدمة" class="form-radio text-blue-600">
-                            <span class="mr-2">طلب خدمة جديدة</span>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="reqType" value="طلب خدمة جديدة" class="w-4 h-4 text-blue-600">
+                            <span>طلب خدمة جديدة</span>
                         </label>
                     </div>
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold mb-1">تفاصيل المشكلة أو الطلب</label>
-                    <textarea id="details" rows="3" required class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none" placeholder="اكتب تفاصيل مشكلتك هنا مثل: انقطاع الخدمة، بطء، طلب نقل خط..."></textarea>
+                    <textarea id="details" required rows="4" placeholder="اكتب تفاصيل مشكلتك هنا مثل: انقطاع الخدمة، بطء، طلب نقل خط..." class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-md hover:bg-blue-700 transition duration-200 shadow">
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 shadow-sm">
                     إرسال الطلب الآن
                 </button>
             </form>
         </section>
 
-        <!-- القسم الثاني: تتبع حالة طلب سابق -->
-        <section class="flex flex-col gap-6">
+        <!-- قسم تتبع حالة البلاغات والطلبات الظاهر في الصورة 295705.jpg -->
+        <section class="space-y-6">
             <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                <h2 class="text-xl font-bold text-green-600 mb-4 border-b pb-2 flex items-center gap-2">
+                <h2 class="text-xl font-bold text-green-600 mb-6 border-b pb-2 flex items-center gap-2">
                     🔍 تتبع حالة البلاغات والطلبات
                 </h2>
                 <form id="trackForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">رقم التتبع (Ticket ID)</label>
-                        <input type="text" id="trackId" required class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500 outline-none placeholder-right" placeholder="مثال: TK-1234">
+                        <input type="text" id="trackId" required placeholder="مثال: KN-1234" class="w-full p-2.5 border border-gray-300 rounded-md text-center font-mono focus:ring-2 focus:ring-green-500 focus:outline-none" dir="ltr">
                     </div>
+
                     <div>
                         <label class="block text-sm font-semibold mb-1">الرمز السري الخاص بالطلب (PIN)</label>
-                        <input type="password" id="trackPin" required maxlength="4" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500 outline-none placeholder-right" placeholder="الرمز المكون من 4 أرقام">
+                        <input type="password" id="trackPin" required placeholder="الرمز المكون من 4 أرقام" class="w-full p-2.5 border border-gray-300 rounded-md text-center focus:ring-2 focus:ring-green-500 focus:outline-none">
                     </div>
-                    <button type="submit" class="w-full bg-green-600 text-white font-bold py-2 rounded-md hover:bg-green-700 transition duration-200 shadow">
+
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 shadow-sm">
                         بحث وتتبع الحالة
                     </button>
                 </form>
             </div>
 
-            <!-- مكان ظهور نتيجة التتبع (يظهر بالـ JavaScript لاحقاً) -->
-            <div id="trackResult" class="hidden bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                <!-- محتوى نتيجة التتبع سيتم حقنه هنا ديناميكياً -->
+            <!-- مكان ظهور نتيجة التتبع والبحث التلقائي المظهر في الصورة 295734.jpg -->
+            <div id="trackResult" class="hidden bg-white p-6 rounded-lg shadow-md border border-gray-100 transition duration-300">
+                <!-- يتم تعبئة هذا القسم تلقائياً بواسطة الجافاسكريبت -->
             </div>
         </section>
 
     </main>
 
-    <!-- الفوتر / أسفل الصفحة -->
+    <!-- الفوتر السفلي المظهر في السطر 200 من الصورة 295734.jpg -->
     <footer class="bg-gray-800 text-white text-center p-3 text-xs">
-        جميع الحقوق محفوظة &copy; 2026 | نظام إدارة الشبكة الذكي
+        شبكة كويت نتورك | &copy; 2026 | جميع الحقوق محفوظة لـ نظام إدارة الخدمة الذاتية
     </footer>
 
-    <!-- ملف برمجة التفاعلات وقاعدة البيانات -->
+    <!-- الجزء البرمجي الخاص بالربط المباشر والمجاني مع Firebase بقواعد البيانات الفورية -->
     <script>
-        // هنا سيتم وضع أكواد جافا سكريبت لربط النماذج بقاعدة البيانات وTelegram
-        document.getElementById('ticketForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('تم استلام البيانات برمجياً، سنقوم في الخطوة القادمة بربطها بـ Firebase مباشرة!');
-        });
-    </script>
-</body>
-</html>
+    // رابط قاعدة البيانات الحقيقي والمباشر لشبكتك
+    const FIREBASE_URL = "https://kuwait-network-system-default-rtdb.firebaseio.com/";
 
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة المشتركين | كويت تورك</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <style>body { font-family: 'Cairo', sans-serif; }</style>
-</head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between">
+    // 1. معالجة إرسال طلب جديد وحفظه في الـ Realtime Database
+    document.getElementById('ticketForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
-    <header class="bg-blue-600 text-white shadow-md p-4 text-center">
-        <h1 class="text-2xl font-bold">بوابة الدعم الفني والطلبات</h1>
-        <p class="text-sm opacity-90 mt-1">نظام الخدمة الذاتية لعملاء شبكة كويت نتورك</p>
-    </header>
+        // توليد رقم تتبع عشوائي وبن سري مكون من 4 أرقام كما في السطور 211-212 من ملفك القديم
+        const randId = "KN-" + Math.floor(1000 + Math.random() * 9000);
+        const randPin = Math.floor(1000 + Math.random() * 9000).toString();
 
-    <main class="max-w-6xl mx-auto p-4 w-full flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        const ticketData = {
+            ticketId: randId,
+            trackingPin: randPin,
+            clientName: document.getElementById('clientName').value,
+            clientPhone: document.getElementById('clientPhone').value,
+            region: document.getElementById('region').value,
+            type: document.querySelector('input[name="reqType"]:checked').value,
+            details: document.getElementById('details').value,
+            status: 'new',
+            assignedTechnician: 'غير معين بعد',
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            // إرسال البيانات مباشرة باستخدام fetch بدون الحاجة لإعدادات معقدة
+            const response = await fetch(`${FIREBASE_URL}tickets/${randId}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticketData)
+            });
+
+            if (!response.ok) throw new Error();
+
+            alert(`🎉 تم تقديم طلبك بنجاح لشبكة كويت نتورك!\n\n📝 رقم التتبع الخاص بك: ${randId}\n🔐 الرمز السري الفوري: ${randPin}\n\nيرجى حفظ هذه البيانات لتتبع حالة طلبك لاحقاً.`);
+            document.getElementById('ticketForm').reset();
+        } catch (error) {
+            console.error("Error:", error);
+            alert("حدث خطأ أثناء الاتصال بقاعدة البيانات، يرجى مراجعة صلاحيات الحماية (Rules) في تفضيلات Firebase.");
+        }
+    });
+
+    // 2. معالجة البحث الفوري وجلب حالة البلاغ من السيرفر
+    document.getElementById('trackForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        <section class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-            <h2 class="text-xl font-bold text-blue-600 mb-4 border-b pb-2 flex items-center gap-2">✍️ تقديم طلب أو بلاغ جديد</h2>
-            <form id="ticketForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold mb-1">اسم المشترك</label>
-                    <input type="text" id="clientName" required class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="الاسم الكامل">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-1">رقم الهاتف للتواصل</label>
-                    <input type="tel" id="clientPhone" required class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 text-right" placeholder="7xxxxxxxxx">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-1">المنطقة</label>
-                    <select id="region" required class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">اختر المنطقة...</option>
-                        <option value="المنطقة الرئيسية">المنطقة الرئيسية</option>
-                        <option value="القطاع الشرقي">القطاع الشرقي</option>
-                        <option value="الريف / القرية">الريف / القرية</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-1">نوع المعاملة</label>
-                    <div class="flex gap-4 mt-1">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="reqType" value="بلاغ مشكلة" checked class="text-blue-600 focus:ring-blue-500">
-                            <span class="mr-2">بلاغ مشكلة أعطال</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="reqType" value="طلب خدمة" class="text-blue-600 focus:ring-blue-500">
-                            <span class="mr-2">طلب خدمة جديدة</span>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-1">تفاصيل المشكلة أو الطلب</label>
-                    <textarea id="details" rows="3" required class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="اكتب تفاصيل العطل بدقة..."></textarea>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-md hover:bg-blue-700 transition shadow">إرسال الطلب الآن</button>
-            </form>
-        </section>
+        const tId = document.getElementById('trackId').value.trim().toUpperCase();
+        const tPin = document.getElementById('trackPin').value.trim();
+        const resultDiv = document.getElementById('trackResult');
 
-        <section class="flex flex-col gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                <h2 class="text-xl font-bold text-green-600 mb-4 border-b pb-2">🔍 تتبع حالة البلاغات والطلبات</h2>
-                <form id="trackForm" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">رقم التتبع (Ticket ID)</label>
-                        <input type="text" id="trackId" required class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-green-500 uppercase text-right" placeholder="KN-XXXX">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">الرمز السري (PIN)</label>
-                        <input type="password" id="trackPin" required maxlength="4" class="w-full p-2 border rounded-md outline-none focus:ring-2 focus:ring-green-500 text-right" placeholder="XXXX">
-                    </div>
-                    <button type="submit" class="w-full bg-green-600 text-white font-bold py-2 rounded-md hover:bg-green-700 transition shadow">بحث وتتبع الحالة</button>
-                </form>
-            </div>
+        try {
+            const response = await fetch(`${FIREBASE_URL}tickets/${tId}.json`);
+            const ticket = await response.json();
 
-            <div id="trackResult" class="hidden bg-white p-6 rounded-lg shadow-md border border-gray-100 transition duration-300"></div>
-        </section>
-    </main>
+            // التحقق من صحة رقم التتبع والرمز السري
+            if (ticket && ticket.trackingPin === tPin) {
+                let statusBadge = "";
+                if (ticket.status === "new") statusBadge = "<span class='bg-blue-100 text-blue-800 px-3 py-1 rounded text-xs font-bold'>جديد</span>";
+                if (ticket.status === "assigned") statusBadge = "<span class='bg-yellow-100 text-yellow-800 px-3 py-1 rounded text-xs font-bold'>قيد المعالجة</span>";
+                if (ticket.status === "resolved") statusBadge = "<span class='bg-green-100 text-green-800 px-3 py-1 rounded text-xs font-bold'>مكتمل بنجاح</span>";
 
-    <footer class="bg-gray-800 text-white text-center p-3 text-xs">جميع الحقوق محفوظة &copy; 2026 | شبكة كويت نتورك</footer>
-
-    <script>
-        // إعدادات Firebase (استبدلها ببيانات مشروعك الفعلي لاحقاً)
-        const firebaseConfig = { apiKey: "AIzaSy...", authDomain: "demo.firebaseapp.com", projectId: "demo-project", storageBucket: "demo.appspot.com", messagingSenderId: "123", appId: "123" };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // 1. معالجة إرسال طلب جديد وعمل كود تتبع تلقائي
-        document.getElementById('ticketForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const randId = "KN-" + Math.floor(1000 + Math.random() * 9000);
-            const randPin = Math.floor(1000 + Math.random() * 9000).toString();
-            
-            const ticketData = {
-                ticketId: randId,
-                trackingPin: randPin,
-                clientName: document.getElementById('clientName').value,
-                clientPhone: document.getElementById('clientPhone').value,
-                region: document.getElementById('region').value,
-                type: document.querySelector('input[name="reqType"]:checked').value,
-                details: document.getElementById('details').value,
-                status: 'new',
-                assignedTechnician: 'غير معين بعد',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            try {
-                await db.collection('tickets').doc(randId).set(ticketData);
-                alert(`🎉 تم إرسال طلبك بنجاح!\nرقم التتبع: ${randId}\nالرمز السري الخاص بك: ${randPin}\nيرجى حفظ هذه البيانات لتتبع حالة طلبك لاحقاً.`);
-                document.getElementById('ticketForm').reset();
-            } catch (error) {
-                console.error("خطأ أثناء الحفظ: ", error);
-                alert("تمت محاكاة الحفظ بنجاح (في وضع النسخة التجريبية المبدئية)!");
-            }
-        });
-
-        // 2. معالجة البحث وتتبع حالة الطلب فورياً
-        document.getElementById('trackForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const tId = document.getElementById('trackId').value.trim().toUpperCase();
-            const tPin = document.getElementById('trackPin').value.trim();
-            const resultDiv = document.getElementById('trackResult');
-
-            try {
-                const doc = await db.collection('tickets').doc(tId).get();
-                if (doc.exists && doc.data().trackingPin === tPin) {
-                    const data = doc.data();
-                    let statusBadge = '';
-                    if(data.status === 'new') statusBadge = '<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded text-sm font-bold">جديد (في قائمة الانتظار)</span>';
-                    if(data.status === 'assigned') statusBadge = '<span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded text-sm font-bold">جاري المتابعة مع الفني</span>';
-                    if(data.status === 'resolved') statusBadge = '<span class="bg-green-100 text-green-800 px-3 py-1 rounded text-sm font-bold">تم حل المشكلة بنجاح ✓</span>';
-
-                    resultDiv.innerHTML = `
-                        <h3 class="text-lg font-bold text-gray-700 mb-3 border-b pb-1">📊 تفاصيل الطلب الخاص بك:</h3>
-                        <div class="space-y-2 text-sm">
-                            <p><strong>اسم المشترك:</strong> ${data.clientName}</p>
-                            <p><strong>نوع المعاملة:</strong> ${data.type}</p>
-                            <p><strong>حالة الطلب الحالية:</strong> ${statusBadge}</p>
-                            <p><strong>الفني المسؤول:</strong> ${data.assignedTechnician}</p>
-                            <p class="text-xs text-gray-400 mt-4">آخر تحديث للطلب يتم تلقائياً من الإدارة</p>
-                        </div>
-                    `;
-                    resultDiv.classList.remove('hidden');
-                } else {
-                    alert("عذراً، رقم التتبع أو الرمز السري غير صحيح!");
-                }
-            } catch (error) {
-                // محاكاة عرض البيانات في حال لم يتم تفعيل قاعدة البيانات السحابية الحقيقية بعد
                 resultDiv.innerHTML = `
-                    <h3 class="text-lg font-bold text-gray-700 mb-3 border-b pb-1">📊 وضع المعاينة التجريبية:</h3>
-                    <p class="text-sm text-yellow-600">النظام جاهز برمجياً للربط بقاعدتك السحابية. عند ربط حساب السيرفر ستظهر هنا حالة الطلب (جديد / قيد المعالجة / مكتمل) بشكل مباشر وفوري للعميل.</p>
+                    <h3 class='text-lg font-bold text-gray-700 mb-3 border-b pb-1'>📋 تفاصيل حالة طلبك الحالية:</h3>
+                    <div class='space-y-2 text-sm'>
+                        <p><strong>اسم المشترك:</strong> ${ticket.clientName}</p>
+                        <p><strong>نوع المعاملة:</strong> ${ticket.type}</p>
+                        <p><strong>حالة الطلب:</strong> ${statusBadge}</p>
+                        <p><strong>الفني المسؤول:</strong> ${ticket.assignedTechnician}</p>
+                        <p class='text-xs text-gray-400 mt-4 pt-2 border-t'>آخر تحديث تلقائي من الإدارة: وبشكل فوري.</p>
+                    </div>
                 `;
                 resultDiv.classList.remove('hidden');
+            } else {
+                alert("⚠️ نعتذر منك، رقم التتبع أو الرمز السري الذي أدخلته غير صحيح!");
             }
-        });
+        } catch (error) {
+            console.error("Error:", error);
+            alert("حدث خطأ أثناء جلب تفاصيل البلاغ.");
+        }
+    });
     </script>
 </body>
 </html>
-
